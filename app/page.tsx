@@ -67,3 +67,14 @@ export default function Home() {
     </div>
   );
 }
+import { auth } from "../lib/firebase";
+
+export default function Home() {
+  console.log("Firebase Auth object:", auth);
+
+  return (
+    <h1 className="text-3xl font-bold underline text-blue-600">
+      ¡Hola TacoExpress con Tailwind y Firebase!
+    </h1>
+  );
+}
