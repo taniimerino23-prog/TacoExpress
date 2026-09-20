@@ -63,9 +63,9 @@ http://localhost:3000
 
 ## Despliegue
 
-La aplicación será desplegada mediante Vercel.
+La aplicación se encuentra desplegada mediante Vercel.
 
-Enlace: pendiente de agregar.
+Enlace: https://taco-express.vercel.app
 
 ## Repositorio
 
