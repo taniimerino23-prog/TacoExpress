@@ -70,3 +70,6 @@ Enlace: https://taco-express.vercel.app
 ## Repositorio
 
 El proyecto utiliza una rama individual por integrante para facilitar el trabajo colaborativo y mantener evidencia de las contribuciones realizadas.
+## Gestión de imágenes
+
+Las imágenes de los productos se gestionan mediante ImgBB. La clave de acceso se configura de forma segura mediante la variable de entorno `IMGBB_API_KEY` y no se almacena directamente en el código fuente.
