@@ -1,0 +1,51 @@
+{
+  "orders": [
+    {
+      "id": "ORD-101",
+      "customerName": "Juan Pérez",
+      "createdAt": "2026-09-20T10:30:00Z",
+      "status": "En espera",
+      "total": 8.50,
+      "items": [
+        {
+          "name": "Taco al Pastor",
+          "quantity": 3,
+          "price": 1.50
+        },
+        {
+          "name": "Quesadilla de Asada",
+          "quantity": 1,
+          "price": 4.00
+        }
+      ]
+    },
+    {
+      "id": "ORD-102",
+      "customerName": "María López",
+      "createdAt": "2026-09-20T10:35:00Z",
+      "status": "En preparación",
+      "total": 5.00,
+      "items": [
+        {
+          "name": "Burrito de Pollo",
+          "quantity": 1,
+          "price": 5.00
+        }
+      ]
+    },
+    {
+      "id": "ORD-103",
+      "customerName": "Carlos Gómez",
+      "createdAt": "2026-09-20T11:00:00Z",
+      "status": "En espera",
+      "total": 3.00,
+      "items": [
+        {
+          "name": "torta",
+          "quantity": 1,
+          "price": 3.00
+        }
+      ]
+    }
+  ]
+}
