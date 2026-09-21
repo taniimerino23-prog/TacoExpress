@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3001";
+const API_URL = "https://6ab07cb89751d2b03e6c2eec.mockapi.io";
 
 export async function getOrders() {
   const response = await fetch(`${API_URL}/orders`);
