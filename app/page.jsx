@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-// Importamos los servicios necesarios (asumiendo que están en '../services/ordersService')
+// Importamos los servicios necesarios
 import { getOrders, updateOrder, createOrder } from "../services/ordersService";
 
 const ESTADOS = ["En espera", "En preparación", "Listo para entregar", "Entregado"];
@@ -20,7 +20,7 @@ export default function HomePage() {
     // Al cargar la página, traemos los pedidos del backend
     getOrders()
       .then((data) => {
-        setOrders(data);
+        setOrders(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch((error) => {
@@ -35,7 +35,6 @@ export default function HomePage() {
     if (!itemName.trim() || !itemPrice || itemQuantity < 1) return;
 
     const newItem = {
-      // Generamos un ID local único para los ítems temporales
       id: Date.now().toString(),
       name: itemName.trim(),
       quantity: Number(itemQuantity),
@@ -54,7 +53,7 @@ export default function HomePage() {
     setItemsList(itemsList.filter(item => item.id !== idToRemove));
   };
 
-  // Guardar el pedido completo en json-server
+  // Guardar el pedido completo
   const handleCreateOrder = async (e) => {
     e.preventDefault();
     if (!customerName.trim() || itemsList.length === 0) {
@@ -62,24 +61,20 @@ export default function HomePage() {
       return;
     }
 
-    const total = itemsList.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const total = itemsList.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
     const newOrderData = {
-      // Dejamos que json-server genere el ID de la orden
       customerName: customerName.trim(),
       createdAt: new Date().toISOString(),
       status: "En espera",
       total,
-      // Los ítems ya tienen su ID local, que también se guardará
       items: itemsList,
     };
 
     try {
       setLoading(true);
       const createdOrder = await createOrder(newOrderData);
-      // Actualizar la lista en pantalla
       setOrders([...orders, createdOrder]);
-      // Limpiar formulario completo
       setCustomerName("");
       setItemsList([]);
       alert("¡Pedido creado exitosamente!");
@@ -94,17 +89,13 @@ export default function HomePage() {
   // Cambiar estado del pedido
   const handleStatusChange = async (id, status) => {
     try {
-      // Actualización optimista en la interfaz
       setOrders((prev) =>
         prev.map((ord) => (ord.id === id ? { ...ord, status } : ord))
       );
-      // Actualización en el backend
       await updateOrder(id, { status });
     } catch (error) {
       console.error("Error actualizando estado:", error);
       alert("No se pudo actualizar el estado en el servidor.");
-      // Revertir cambio en la interfaz (opcional, traería de nuevo los datos)
-      // getOrders().then(setOrders);
     }
   };
 
@@ -195,9 +186,9 @@ export default function HomePage() {
                 <ul className="space-y-2 text-sm">
                   {itemsList.map((item) => (
                     <li key={item.id} className="flex justify-between items-center bg-white p-3 rounded-lg border border-gray-100">
-                      <span>{item.quantity}x {item.name} - ${item.price.toFixed(2)} c/u</span>
+                      <span>{item.quantity}x {item.name} - ${(Number(item.price) || 0).toFixed(2)} c/u</span>
                       <div className="flex items-center gap-3">
-                        <span className="font-semibold">${(item.quantity * item.price).toFixed(2)}</span>
+                        <span className="font-semibold">${((Number(item.quantity) || 0) * (Number(item.price) || 0)).toFixed(2)}</span>
                         <button 
                           type="button" 
                           onClick={() => handleRemoveItem(item.id)}
@@ -210,7 +201,7 @@ export default function HomePage() {
                   ))}
                 </ul>
                 <div className="text-right mt-4 font-bold text-lg">
-                  Total Temporal: ${itemsList.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}
+                  Total Temporal: ${itemsList.reduce((acc, item) => acc + (item.price * item.quantity), 0).toFixed(2)}
                 </div>
               </div>
             )}
@@ -238,30 +229,39 @@ export default function HomePage() {
               <div key={order.id} className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex flex-col">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="font-bold text-lg text-gray-900">{order.customerName}</h3>
+                    <h3 className="font-bold text-lg text-gray-900">{order.customerName || "Cliente sin nombre"}</h3>
                     <p className="text-xs text-gray-500">ID: {order.id}</p>
                     <p className="text-xs text-gray-400">
-                      {new Date(order.createdAt).toLocaleString()}
+                      {order.createdAt ? new Date(order.createdAt).toLocaleString() : "Fecha no disponible"}
                     </p>
                   </div>
-                  <span className="font-bold text-xl text-green-600">${order.total.toFixed(2)}</span>
+                  {/* Total totalmente protegido */}
+                  <span className="font-bold text-xl text-green-600">
+                    ${(Number(order?.total) || 0).toFixed(2)}
+                  </span>
                 </div>
 
-                {/* Lista de productos de la orden */}
+                {/* Lista de productos con protección contra undefined */}
                 <div className="flex-grow border-t border-gray-100 pt-3 mb-4 space-y-1.5">
-                  {order.items.map((item, index) => (
-                    <p key={index} className="text-sm text-gray-700 flex justify-between">
-                      <span>{item.quantity}x {item.name}</span>
-                      <span className="font-medium text-gray-500">${(item.quantity * item.price).toFixed(2)}</span>
-                    </p>
-                  ))}
+                  {Array.isArray(order?.items) && order.items.length > 0 ? (
+                    order.items.map((item, index) => (
+                      <p key={index} className="text-sm text-gray-700 flex justify-between">
+                        <span>{item.quantity || 1}x {item.name || "Producto"}</span>
+                        <span className="font-medium text-gray-500">
+                          ${((Number(item?.quantity) || 1) * (Number(item?.price) || 0)).toFixed(2)}
+                        </span>
+                      </p>
+                    ))
+                  ) : (
+                    <p className="text-xs text-gray-400 italic">Sin productos detallados</p>
+                  )}
                 </div>
 
                 {/* Control de estado */}
                 <div className="border-t border-gray-100 pt-4 mt-auto">
                   <label className="block text-xs font-medium text-gray-500 mb-1.5">Estado del Pedido</label>
                   <select
-                    value={order.status}
+                    value={order.status || "En espera"}
                     onChange={(e) => handleStatusChange(order.id, e.target.value)}
                     className="w-full p-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 font-medium focus:ring-1 focus:ring-orange-300"
                   >
