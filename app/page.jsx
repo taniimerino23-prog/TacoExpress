@@ -244,7 +244,10 @@ export default function HomePage() {
                       {new Date(order.createdAt).toLocaleString()}
                     </p>
                   </div>
-                  <span className="font-bold text-xl text-green-600">${order.total.toFixed(2)}</span>
+                {/* Sección del total de la orden protegida contra valores undefined */}
+<span className="font-bold text-xl text-green-600">
+  ${(Number(order?.total) || 0).toFixed(2)}
+</span>
                 </div>
 
                 {/* Lista de productos de la orden */}
