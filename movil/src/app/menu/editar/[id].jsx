@@ -14,6 +14,7 @@ import {
 import FormularioPlatillo from '../../../components/FormularioPlatillo';
 import { useAuth } from '../../../context/AuthContext';
 import { actualizarPlatillo, buscarPlatillo } from '../../../services/menuApi';
+import { COLORES } from '../../../theme';
 
 export default function PantallaEditar() {
   const { id } = useLocalSearchParams();
@@ -65,7 +66,7 @@ export default function PantallaEditar() {
     return (
       <View style={estilos.centro}>
         <Stack.Screen options={{ title: 'Editar platillo' }} />
-        <ActivityIndicator size="large" color="#e8590c" />
+        <ActivityIndicator size="large" color={COLORES.acento} />
       </View>
     );
   }
@@ -102,17 +103,17 @@ export default function PantallaEditar() {
 }
 
 const estilos = StyleSheet.create({
-  pantalla: { flex: 1, backgroundColor: '#faf8f6' },
+  pantalla: { flex: 1, backgroundColor: COLORES.fondo },
   centro: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#faf8f6',
+    backgroundColor: COLORES.fondo,
     padding: 28,
   },
   bloqueo: {
     flex: 1,
-    backgroundColor: '#faf8f6',
+    backgroundColor: COLORES.fondo,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 28,
@@ -120,33 +121,33 @@ const estilos = StyleSheet.create({
   bloqueoTitulo: {
     fontSize: 19,
     fontWeight: '700',
-    color: '#1f1d1b',
+    color: COLORES.texto,
     textAlign: 'center',
   },
   bloqueoTexto: {
     fontSize: 14,
-    color: '#6b6560',
+    color: COLORES.textoSuave,
     textAlign: 'center',
     marginTop: 8,
     marginBottom: 24,
   },
-  enlace: { color: '#e8590c', fontWeight: '600' },
+  enlace: { color: COLORES.acento, fontWeight: '600' },
   boton: {
-    backgroundColor: '#e8590c',
+    backgroundColor: COLORES.acento,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
     alignSelf: 'stretch',
   },
-  botonTexto: { color: '#ffffff', fontWeight: '600', fontSize: 15 },
+  botonTexto: { color: COLORES.acentoTexto, fontWeight: '600', fontSize: 15 },
   botonGris: {
     borderWidth: 1,
-    borderColor: '#d8d3cd',
+    borderColor: COLORES.borde,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
     alignSelf: 'stretch',
     marginTop: 10,
   },
-  botonGrisTexto: { color: '#4a4540', fontWeight: '600', fontSize: 15 },
+  botonGrisTexto: { color: COLORES.textoSuave, fontWeight: '600', fontSize: 15 },
 });

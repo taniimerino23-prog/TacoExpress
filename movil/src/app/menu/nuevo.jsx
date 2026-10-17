@@ -8,6 +8,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FormularioPlatillo from '../../components/FormularioPlatillo';
 import { useAuth } from '../../context/AuthContext';
 import { crearPlatillo } from '../../services/menuApi';
+import { COLORES } from '../../theme';
 
 export default function PantallaNuevo() {
   const router = useRouter();
@@ -51,10 +52,10 @@ export default function PantallaNuevo() {
 }
 
 const estilos = StyleSheet.create({
-  pantalla: { flex: 1, backgroundColor: '#faf8f6' },
+  pantalla: { flex: 1, backgroundColor: COLORES.fondo },
   bloqueo: {
     flex: 1,
-    backgroundColor: '#faf8f6',
+    backgroundColor: COLORES.fondo,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 28,
@@ -62,32 +63,32 @@ const estilos = StyleSheet.create({
   bloqueoTitulo: {
     fontSize: 19,
     fontWeight: '700',
-    color: '#1f1d1b',
+    color: COLORES.texto,
     textAlign: 'center',
   },
   bloqueoTexto: {
     fontSize: 14,
-    color: '#6b6560',
+    color: COLORES.textoSuave,
     textAlign: 'center',
     marginTop: 8,
     marginBottom: 24,
   },
   boton: {
-    backgroundColor: '#e8590c',
+    backgroundColor: COLORES.acento,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
     alignSelf: 'stretch',
   },
-  botonTexto: { color: '#ffffff', fontWeight: '600', fontSize: 15 },
+  botonTexto: { color: COLORES.acentoTexto, fontWeight: '600', fontSize: 15 },
   botonGris: {
     borderWidth: 1,
-    borderColor: '#d8d3cd',
+    borderColor: COLORES.borde,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
     alignSelf: 'stretch',
     marginTop: 10,
   },
-  botonGrisTexto: { color: '#4a4540', fontWeight: '600', fontSize: 15 },
+  botonGrisTexto: { color: COLORES.textoSuave, fontWeight: '600', fontSize: 15 },
 });

@@ -23,6 +23,7 @@ import {
   EMOJI_CATEGORIA,
   fuenteImagen,
 } from '../../services/menuApi';
+import { COLORES } from '../../theme';
 
 export default function PantallaDetalle() {
   const { id } = useLocalSearchParams();
@@ -79,7 +80,7 @@ export default function PantallaDetalle() {
   if (cargando) {
     return (
       <View style={estilos.centro}>
-        <ActivityIndicator size="large" color="#e8590c" />
+        <ActivityIndicator size="large" color={COLORES.acento} />
       </View>
     );
   }
@@ -137,7 +138,7 @@ export default function PantallaDetalle() {
           </TouchableOpacity>
 
           <TouchableOpacity style={estilos.botonEspaciado} onPress={cambiarDisponibilidad}>
-            <Text style={estilos.botonTexto}>
+            <Text style={estilos.botonEspaciadoTexto}>
               {platillo.disponible ? 'Marcar agotado' : 'Marcar disponible'}
             </Text>
           </TouchableOpacity>
@@ -156,20 +157,20 @@ export default function PantallaDetalle() {
 }
 
 const estilos = StyleSheet.create({
-  pantalla: { flex: 1, backgroundColor: '#faf8f6' },
+  pantalla: { flex: 1, backgroundColor: COLORES.fondo },
   contenido: { padding: 20, paddingBottom: 40 },
   centro: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#faf8f6',
+    backgroundColor: COLORES.fondo,
   },
   foto: { width: '100%', height: 200, borderRadius: 16, marginBottom: 18 },
   emojiCaja: {
     width: '100%',
     height: 160,
     borderRadius: 16,
-    backgroundColor: '#fdf1e7',
+    backgroundColor: COLORES.acentoFondo,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 18,
@@ -178,80 +179,80 @@ const estilos = StyleSheet.create({
   categoria: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#8a8278',
+    color: COLORES.textoTenue,
     letterSpacing: 1,
   },
-  nombre: { fontSize: 24, fontWeight: '700', color: '#1f1d1b', marginTop: 4 },
-  precio: { fontSize: 20, fontWeight: '700', color: '#e8590c', marginTop: 6 },
-  descripcion: { fontSize: 15, color: '#4a4540', marginTop: 12, lineHeight: 22 },
+  nombre: { fontSize: 24, fontWeight: '700', color: COLORES.texto, marginTop: 4 },
+  precio: { fontSize: 20, fontWeight: '700', color: COLORES.acento, marginTop: 6 },
+  descripcion: { fontSize: 15, color: COLORES.textoSuave, marginTop: 12, lineHeight: 22 },
   cajaVerde: {
-    backgroundColor: '#e7f6ec',
+    backgroundColor: COLORES.exitoFondo,
     borderRadius: 8,
     padding: 10,
     marginTop: 18,
     alignItems: 'center',
   },
   cajaRoja: {
-    backgroundColor: '#fde8e8',
+    backgroundColor: COLORES.errorFondo,
     borderRadius: 8,
     padding: 10,
     marginTop: 18,
     alignItems: 'center',
   },
-  textoVerde: { color: '#1e7a44', fontWeight: '600' },
-  textoRojo: { color: '#c0392b', fontWeight: '600' },
+  textoVerde: { color: COLORES.exito, fontWeight: '600' },
+  textoRojo: { color: COLORES.error, fontWeight: '600' },
   zonaAdmin: {
     marginTop: 22,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#e6e2de',
+    borderTopColor: COLORES.borde,
   },
   zonaAdminTitulo: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#8a8278',
+    color: COLORES.textoTenue,
     letterSpacing: 1,
     marginBottom: 10,
   },
-  boton: {
-    backgroundColor: '#1f1d1b',
-    borderRadius: 10,
-    paddingVertical: 14,
-    alignItems: 'center',
-  },
+  // Boton principal: fondo dorado, por eso el texto va oscuro.
   botonNaranja: {
-    backgroundColor: '#e8590c',
+    backgroundColor: COLORES.acento,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
   },
+  botonTexto: { color: COLORES.acentoTexto, fontWeight: '600', fontSize: 15 },
+
+  // Boton secundario: fondo oscuro, por eso el texto va claro.
   botonEspaciado: {
-    backgroundColor: '#1f1d1b',
+    backgroundColor: COLORES.superficieAlta,
+    borderWidth: 1,
+    borderColor: COLORES.borde,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: 10,
   },
-  botonTexto: { color: '#ffffff', fontWeight: '600', fontSize: 15 },
+  botonEspaciadoTexto: { color: COLORES.texto, fontWeight: '600', fontSize: 15 },
   botonRojo: {
     borderWidth: 1,
-    borderColor: '#e3b4ae',
-    backgroundColor: '#fdf4f3',
+    borderColor: COLORES.error,
+    backgroundColor: COLORES.errorFondo,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: 10,
   },
-  botonRojoTexto: { color: '#c0392b', fontWeight: '600', fontSize: 15 },
+  botonRojoTexto: { color: COLORES.error, fontWeight: '600', fontSize: 15 },
   botonGris: {
     borderWidth: 1,
-    borderColor: '#d8d3cd',
+    borderColor: COLORES.borde,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: 18,
   },
-  botonGrisTexto: { color: '#4a4540', fontWeight: '600', fontSize: 15 },
-  vacio: { color: '#6b6560', marginBottom: 10 },
-  enlace: { color: '#e8590c', fontWeight: '600' },
+  botonGrisTexto: { color: COLORES.textoSuave, fontWeight: '600', fontSize: 15 },
+  vacio: { color: COLORES.textoSuave, marginBottom: 10 },
+  enlace: { color: COLORES.acento, fontWeight: '600' },
 });

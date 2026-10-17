@@ -15,6 +15,7 @@ import {
 import TarjetaPlatillo from '../../components/TarjetaPlatillo';
 import { useAuth } from '../../context/AuthContext';
 import { agruparPorCategoria, listarPlatillos } from '../../services/menuApi';
+import { COLORES } from '../../theme';
 
 export default function PantallaMenu() {
   const router = useRouter();
@@ -48,7 +49,7 @@ export default function PantallaMenu() {
   if (cargando) {
     return (
       <View style={estilos.centro}>
-        <ActivityIndicator size="large" color="#e8590c" />
+        <ActivityIndicator size="large" color={COLORES.acento} />
         <Text style={estilos.cargando}>Cargando menu...</Text>
       </View>
     );
@@ -99,42 +100,42 @@ export default function PantallaMenu() {
 }
 
 const estilos = StyleSheet.create({
-  pantalla: { flex: 1, backgroundColor: '#faf8f6' },
+  pantalla: { flex: 1, backgroundColor: COLORES.fondo },
   centro: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#faf8f6',
+    backgroundColor: COLORES.fondo,
   },
-  cargando: { marginTop: 10, color: '#6b6560' },
+  cargando: { marginTop: 10, color: COLORES.textoSuave },
   contenido: { padding: 16, paddingBottom: 32 },
   encabezado: { marginBottom: 16 },
-  titulo: { fontSize: 28, fontWeight: '700', color: '#1f1d1b' },
-  subtitulo: { fontSize: 14, color: '#6b6560', marginTop: 2 },
+  titulo: { fontSize: 28, fontWeight: '700', color: COLORES.texto },
+  subtitulo: { fontSize: 14, color: COLORES.textoSuave, marginTop: 2 },
   boton: {
-    backgroundColor: '#e8590c',
+    backgroundColor: COLORES.acento,
     borderRadius: 10,
     paddingVertical: 12,
     alignItems: 'center',
     marginTop: 14,
   },
-  botonTexto: { color: '#ffffff', fontWeight: '600', fontSize: 15 },
+  botonTexto: { color: COLORES.acentoTexto, fontWeight: '600', fontSize: 15 },
   categoria: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#8a8278',
+    color: COLORES.textoTenue,
     letterSpacing: 1,
     marginTop: 14,
     marginBottom: 8,
   },
   vacio: {
     textAlign: 'center',
-    color: '#8a8278',
+    color: COLORES.textoTenue,
     marginTop: 40,
   },
   error: {
-    backgroundColor: '#fde8e8',
-    color: '#c0392b',
+    backgroundColor: COLORES.errorFondo,
+    color: COLORES.error,
     padding: 10,
     margin: 16,
     borderRadius: 8,

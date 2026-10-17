@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import { validarPlatillo } from '../lib/validarPlatillo';
 import { CATEGORIAS, EMOJI_CATEGORIA, fuenteImagen } from '../services/menuApi';
+import { COLORES } from '../theme';
 
 const VACIO = { nombre: '', descripcion: '', precio: '', categoria: '', imagen: '' };
 
@@ -127,7 +128,7 @@ export default function FormularioPlatillo({
           value={datos.nombre}
           onChangeText={(texto) => cambiar('nombre', texto)}
           placeholder="Tacos al pastor"
-          placeholderTextColor="#b0a9a1"
+          placeholderTextColor={COLORES.placeholder}
         />
         {!!errores.nombre && <Text style={estilos.error}>{errores.nombre}</Text>}
 
@@ -141,7 +142,7 @@ export default function FormularioPlatillo({
           value={datos.descripcion}
           onChangeText={(texto) => cambiar('descripcion', texto)}
           placeholder="Ingredientes principales"
-          placeholderTextColor="#b0a9a1"
+          placeholderTextColor={COLORES.placeholder}
           multiline
         />
         {!!errores.descripcion && (
@@ -154,7 +155,7 @@ export default function FormularioPlatillo({
           value={datos.precio}
           onChangeText={(texto) => cambiar('precio', texto)}
           placeholder="3.50"
-          placeholderTextColor="#b0a9a1"
+          placeholderTextColor={COLORES.placeholder}
           keyboardType="decimal-pad"
         />
         {!!errores.precio && <Text style={estilos.error}>{errores.precio}</Text>}
@@ -199,30 +200,30 @@ export default function FormularioPlatillo({
 }
 
 const estilos = StyleSheet.create({
-  pantalla: { flex: 1, backgroundColor: '#faf8f6' },
+  pantalla: { flex: 1, backgroundColor: COLORES.fondo },
   contenido: { padding: 20, paddingBottom: 40 },
   etiqueta: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#4a4540',
+    color: COLORES.textoSuave,
     marginBottom: 6,
     marginTop: 14,
   },
   cajaFoto: {
     borderWidth: 1,
     borderStyle: 'dashed',
-    borderColor: '#d8d3cd',
-    backgroundColor: '#fffdfb',
+    borderColor: COLORES.borde,
+    backgroundColor: COLORES.superficie,
     borderRadius: 12,
     paddingVertical: 22,
     paddingHorizontal: 16,
     alignItems: 'center',
   },
   cajaFotoEmoji: { fontSize: 36, marginBottom: 6 },
-  cajaFotoTexto: { fontSize: 14, fontWeight: '600', color: '#4a4540' },
+  cajaFotoTexto: { fontSize: 14, fontWeight: '600', color: COLORES.textoSuave },
   cajaFotoNota: {
     fontSize: 12,
-    color: '#8a8278',
+    color: COLORES.textoTenue,
     marginTop: 4,
     textAlign: 'center',
   },
@@ -230,59 +231,59 @@ const estilos = StyleSheet.create({
     width: '100%',
     height: 180,
     borderRadius: 12,
-    backgroundColor: '#eceae7',
+    backgroundColor: COLORES.superficieAlta,
   },
   filaBotonesFoto: { flexDirection: 'row', gap: 10, marginTop: 10 },
   botonMedio: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#d8d3cd',
+    borderColor: COLORES.borde,
     borderRadius: 10,
     paddingVertical: 12,
     alignItems: 'center',
   },
-  botonMedioTexto: { color: '#4a4540', fontWeight: '600', fontSize: 14 },
+  botonMedioTexto: { color: COLORES.textoSuave, fontWeight: '600', fontSize: 14 },
   campo: {
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORES.superficie,
     borderWidth: 1,
-    borderColor: '#ddd8d2',
+    borderColor: COLORES.borde,
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 11,
     fontSize: 15,
-    color: '#1f1d1b',
+    color: COLORES.texto,
   },
   campoAlto: { height: 80, textAlignVertical: 'top' },
-  campoError: { borderColor: '#c0392b' },
-  error: { color: '#c0392b', fontSize: 12, marginTop: 4 },
+  campoError: { borderColor: COLORES.error },
+  error: { color: COLORES.error, fontSize: 12, marginTop: 4 },
   pastillas: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   pastilla: {
     borderWidth: 1,
-    borderColor: '#ddd8d2',
-    backgroundColor: '#ffffff',
+    borderColor: COLORES.borde,
+    backgroundColor: COLORES.superficie,
     borderRadius: 20,
     paddingHorizontal: 14,
     paddingVertical: 8,
   },
-  pastillaActiva: { backgroundColor: '#e8590c', borderColor: '#e8590c' },
-  pastillaTexto: { color: '#4a4540', fontSize: 13 },
-  pastillaTextoActivo: { color: '#ffffff', fontSize: 13, fontWeight: '600' },
+  pastillaActiva: { backgroundColor: COLORES.acento, borderColor: COLORES.acento },
+  pastillaTexto: { color: COLORES.textoSuave, fontSize: 13 },
+  pastillaTextoActivo: { color: COLORES.acentoTexto, fontSize: 13, fontWeight: '600' },
   boton: {
-    backgroundColor: '#e8590c',
+    backgroundColor: COLORES.acento,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: 24,
   },
   botonApagado: { opacity: 0.6 },
-  botonTexto: { color: '#ffffff', fontWeight: '600', fontSize: 15 },
+  botonTexto: { color: COLORES.acentoTexto, fontWeight: '600', fontSize: 15 },
   botonGris: {
     borderWidth: 1,
-    borderColor: '#d8d3cd',
+    borderColor: COLORES.borde,
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: 10,
   },
-  botonGrisTexto: { color: '#4a4540', fontWeight: '600', fontSize: 15 },
+  botonGrisTexto: { color: COLORES.textoSuave, fontWeight: '600', fontSize: 15 },
 });

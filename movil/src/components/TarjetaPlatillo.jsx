@@ -4,6 +4,7 @@
 
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { EMOJI_CATEGORIA, fuenteImagen } from '../services/menuApi';
+import { COLORES } from '../theme';
 
 export default function TarjetaPlatillo({ platillo, onPress }) {
   const foto = fuenteImagen(platillo.imagen);
@@ -47,12 +48,12 @@ export default function TarjetaPlatillo({ platillo, onPress }) {
 const estilos = StyleSheet.create({
   tarjeta: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORES.superficie,
     borderRadius: 14,
     padding: 12,
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: '#eceae7',
+    borderColor: COLORES.borde,
   },
   foto: { width: 64, height: 64, borderRadius: 12, marginRight: 12 },
   emojiCaja: {
@@ -60,21 +61,21 @@ const estilos = StyleSheet.create({
     height: 64,
     borderRadius: 12,
     marginRight: 12,
-    backgroundColor: '#fdf1e7',
+    backgroundColor: COLORES.acentoFondo,
     alignItems: 'center',
     justifyContent: 'center',
   },
   emoji: { fontSize: 30 },
   texto: { flex: 1, justifyContent: 'center' },
   filaNombre: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  nombre: { fontSize: 16, fontWeight: '600', color: '#1f1d1b', flexShrink: 1 },
+  nombre: { fontSize: 16, fontWeight: '600', color: COLORES.texto, flexShrink: 1 },
   etiqueta: {
-    backgroundColor: '#fde8e8',
+    backgroundColor: COLORES.errorFondo,
     borderRadius: 6,
     paddingHorizontal: 6,
     paddingVertical: 2,
   },
-  etiquetaTexto: { fontSize: 11, fontWeight: '600', color: '#c0392b' },
-  descripcion: { fontSize: 13, color: '#6b6560', marginTop: 2 },
-  precio: { fontSize: 15, fontWeight: '700', color: '#1f1d1b', marginTop: 6 },
+  etiquetaTexto: { fontSize: 11, fontWeight: '600', color: COLORES.error },
+  descripcion: { fontSize: 13, color: COLORES.textoSuave, marginTop: 2 },
+  precio: { fontSize: 15, fontWeight: '700', color: COLORES.texto, marginTop: 6 },
 });

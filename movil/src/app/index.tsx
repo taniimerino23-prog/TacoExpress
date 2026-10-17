@@ -4,6 +4,7 @@
 import { useRouter } from 'expo-router';
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../context/AuthContext';
+import { COLORES } from '../theme';
 
 export default function PantallaInicio() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function PantallaInicio() {
   if (cargando) {
     return (
       <View style={estilos.pantalla}>
-        <ActivityIndicator size="large" color="#e8590c" />
+        <ActivityIndicator size="large" color={COLORES.acento} />
       </View>
     );
   }
@@ -64,16 +65,16 @@ export default function PantallaInicio() {
 const estilos = StyleSheet.create({
   pantalla: {
     flex: 1,
-    backgroundColor: '#faf8f6',
+    backgroundColor: COLORES.fondo,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 24,
   },
   emoji: { fontSize: 64, marginBottom: 8 },
-  titulo: { fontSize: 32, fontWeight: '700', color: '#1f1d1b' },
-  subtitulo: { fontSize: 15, color: '#6b6560', marginTop: 4, marginBottom: 24 },
+  titulo: { fontSize: 32, fontWeight: '700', color: COLORES.texto },
+  subtitulo: { fontSize: 15, color: COLORES.textoSuave, marginTop: 4, marginBottom: 24 },
   tarjetaSesion: {
-    backgroundColor: '#fdf1e7',
+    backgroundColor: COLORES.acentoFondo,
     borderRadius: 12,
     paddingVertical: 12,
     paddingHorizontal: 20,
@@ -81,26 +82,26 @@ const estilos = StyleSheet.create({
     marginBottom: 20,
     width: '100%',
   },
-  saludo: { fontSize: 16, fontWeight: '600', color: '#8a5a2b' },
-  rol: { fontSize: 12, color: '#a97c4b', marginTop: 2 },
+  saludo: { fontSize: 16, fontWeight: '600', color: COLORES.acento },
+  rol: { fontSize: 12, color: COLORES.acento, marginTop: 2 },
   boton: {
-    backgroundColor: '#e8590c',
+    backgroundColor: COLORES.acento,
     borderRadius: 12,
     paddingVertical: 15,
     alignItems: 'center',
     width: '100%',
   },
-  botonTexto: { color: '#ffffff', fontWeight: '600', fontSize: 16 },
+  botonTexto: { color: COLORES.acentoTexto, fontWeight: '600', fontSize: 16 },
   botonBorde: {
     borderWidth: 1,
-    borderColor: '#d8d3cd',
+    borderColor: COLORES.borde,
     borderRadius: 12,
     paddingVertical: 15,
     alignItems: 'center',
     width: '100%',
     marginTop: 12,
   },
-  botonBordeTexto: { color: '#4a4540', fontWeight: '600', fontSize: 16 },
+  botonBordeTexto: { color: COLORES.textoSuave, fontWeight: '600', fontSize: 16 },
   botonTexto2: { marginTop: 18, padding: 8 },
-  enlace: { color: '#c0392b', fontWeight: '600', fontSize: 14 },
+  enlace: { color: COLORES.error, fontWeight: '600', fontSize: 14 },
 });
