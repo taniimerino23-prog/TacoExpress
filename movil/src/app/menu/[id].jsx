@@ -1,10 +1,13 @@
 // PANTALLA: Detalle de un platillo
 // Recibe el id por la direccion y pide ese platillo al servicio.
+// Las acciones de administracion (marcar agotado, eliminar) solo
+// aparecen si la sesion activa es de administrador.
 
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
+import { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -12,35 +15,65 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useAuth } from '../../context/AuthContext';
 import {
   alternarDisponible,
   buscarPlatillo,
+  eliminarPlatillo,
   EMOJI_CATEGORIA,
+  fuenteImagen,
 } from '../../services/menuApi';
 
 export default function PantallaDetalle() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
+  const { esAdministrador } = useAuth();
   const [platillo, setPlatillo] = useState(null);
   const [cargando, setCargando] = useState(true);
 
-  useEffect(() => {
-    let activo = true;
-    (async () => {
-      const encontrado = await buscarPlatillo(id);
-      if (activo) {
-        setPlatillo(encontrado);
-        setCargando(false);
-      }
-    })();
-    return () => {
-      activo = false;
-    };
-  }, [id]);
+  // useFocusEffect vuelve a leer el platillo cada vez que se entra a la
+  // pantalla, para que los cambios hechos al editarlo se vean de inmediato.
+  useFocusEffect(
+    useCallback(() => {
+      let activo = true;
+      (async () => {
+        const encontrado = await buscarPlatillo(id);
+        if (activo) {
+          setPlatillo(encontrado);
+          setCargando(false);
+        }
+      })();
+      return () => {
+        activo = false;
+      };
+    }, [id])
+  );
 
   async function cambiarDisponibilidad() {
     const actualizado = await alternarDisponible(id);
     setPlatillo(actualizado);
+  }
+
+  function confirmarEliminar() {
+    // Se usa un valor de respaldo porque al abrir la pantalla el platillo
+    // todavia no ha terminado de cargar y vale null.
+    const nombre = platillo ? platillo.nombre : 'este platillo';
+
+    Alert.alert(
+      'Eliminar platillo',
+      `Se quitara "${nombre}" del menu.`,
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Eliminar',
+          style: 'destructive',
+          onPress: async () => {
+            await eliminarPlatillo(id);
+            router.back();
+          },
+        },
+      ]
+    );
   }
 
   if (cargando) {
@@ -66,8 +99,8 @@ export default function PantallaDetalle() {
     <ScrollView style={estilos.pantalla} contentContainerStyle={estilos.contenido}>
       <Stack.Screen options={{ title: platillo.nombre }} />
 
-      {platillo.imagen ? (
-        <Image source={{ uri: platillo.imagen }} style={estilos.foto} />
+      {fuenteImagen(platillo.imagen) ? (
+        <Image source={fuenteImagen(platillo.imagen)} style={estilos.foto} />
       ) : (
         <View style={estilos.emojiCaja}>
           <Text style={estilos.emoji}>
@@ -90,11 +123,30 @@ export default function PantallaDetalle() {
         </Text>
       </View>
 
-      <TouchableOpacity style={estilos.boton} onPress={cambiarDisponibilidad}>
-        <Text style={estilos.botonTexto}>
-          {platillo.disponible ? 'Marcar agotado' : 'Marcar disponible'}
-        </Text>
-      </TouchableOpacity>
+      {/* ACCIONES DE ADMINISTRADOR
+          El cliente solo consulta el platillo; no puede modificarlo. */}
+      {esAdministrador && (
+        <View style={estilos.zonaAdmin}>
+          <Text style={estilos.zonaAdminTitulo}>Acciones del administrador</Text>
+
+          <TouchableOpacity
+            style={estilos.botonNaranja}
+            onPress={() => router.push(`/menu/editar/${id}`)}
+          >
+            <Text style={estilos.botonTexto}>Editar platillo</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={estilos.botonEspaciado} onPress={cambiarDisponibilidad}>
+            <Text style={estilos.botonTexto}>
+              {platillo.disponible ? 'Marcar agotado' : 'Marcar disponible'}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={estilos.botonRojo} onPress={confirmarEliminar}>
+            <Text style={estilos.botonRojoTexto}>Eliminar del menu</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       <TouchableOpacity style={estilos.botonGris} onPress={() => router.back()}>
         <Text style={estilos.botonGrisTexto}>Volver al menu</Text>
@@ -148,21 +200,56 @@ const estilos = StyleSheet.create({
   },
   textoVerde: { color: '#1e7a44', fontWeight: '600' },
   textoRojo: { color: '#c0392b', fontWeight: '600' },
+  zonaAdmin: {
+    marginTop: 22,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#e6e2de',
+  },
+  zonaAdminTitulo: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#8a8278',
+    letterSpacing: 1,
+    marginBottom: 10,
+  },
   boton: {
     backgroundColor: '#1f1d1b',
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
-    marginTop: 18,
+  },
+  botonNaranja: {
+    backgroundColor: '#e8590c',
+    borderRadius: 10,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  botonEspaciado: {
+    backgroundColor: '#1f1d1b',
+    borderRadius: 10,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: 10,
   },
   botonTexto: { color: '#ffffff', fontWeight: '600', fontSize: 15 },
+  botonRojo: {
+    borderWidth: 1,
+    borderColor: '#e3b4ae',
+    backgroundColor: '#fdf4f3',
+    borderRadius: 10,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  botonRojoTexto: { color: '#c0392b', fontWeight: '600', fontSize: 15 },
   botonGris: {
     borderWidth: 1,
     borderColor: '#d8d3cd',
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 18,
   },
   botonGrisTexto: { color: '#4a4540', fontWeight: '600', fontSize: 15 },
   vacio: { color: '#6b6560', marginBottom: 10 },

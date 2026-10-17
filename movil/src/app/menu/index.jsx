@@ -13,10 +13,12 @@ import {
   View,
 } from 'react-native';
 import TarjetaPlatillo from '../../components/TarjetaPlatillo';
+import { useAuth } from '../../context/AuthContext';
 import { agruparPorCategoria, listarPlatillos } from '../../services/menuApi';
 
 export default function PantallaMenu() {
   const router = useRouter();
+  const { esAdministrador } = useAuth();
   const [secciones, setSecciones] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
@@ -68,12 +70,15 @@ export default function PantallaMenu() {
               Toca un platillo para ver su detalle
             </Text>
 
-            <TouchableOpacity
-              style={estilos.boton}
-              onPress={() => router.push('/menu/nuevo')}
-            >
-              <Text style={estilos.botonTexto}>+ Agregar platillo</Text>
-            </TouchableOpacity>
+            {/* El boton solo aparece para el administrador. */}
+            {esAdministrador && (
+              <TouchableOpacity
+                style={estilos.boton}
+                onPress={() => router.push('/menu/nuevo')}
+              >
+                <Text style={estilos.botonTexto}>+ Agregar platillo</Text>
+              </TouchableOpacity>
+            )}
           </View>
         }
         renderSectionHeader={({ section }) => (

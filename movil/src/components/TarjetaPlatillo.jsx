@@ -3,13 +3,15 @@
 // No sabe de donde vienen los datos: solo los recibe y los muestra.
 
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { EMOJI_CATEGORIA } from '../services/menuApi';
+import { EMOJI_CATEGORIA, fuenteImagen } from '../services/menuApi';
 
 export default function TarjetaPlatillo({ platillo, onPress }) {
+  const foto = fuenteImagen(platillo.imagen);
+
   return (
     <TouchableOpacity style={estilos.tarjeta} onPress={onPress} activeOpacity={0.7}>
-      {platillo.imagen ? (
-        <Image source={{ uri: platillo.imagen }} style={estilos.foto} />
+      {foto ? (
+        <Image source={foto} style={estilos.foto} />
       ) : (
         <View style={estilos.emojiCaja}>
           <Text style={estilos.emoji}>
