@@ -30,7 +30,7 @@ let productos: Producto[] = [
     descripcion: "Tortilla de maiz con carne al pastor, cebolla y cilantro.",
     categoria: "Tacos",
     precio: 3.5,
-    imagen: "",
+    imagen: "/imagenes/tacos.jpg",
     disponible: true,
   },
   {
@@ -39,7 +39,7 @@ let productos: Producto[] = [
     descripcion: "Tortilla de harina rellena de queso y pollo.",
     categoria: "Quesadillas",
     precio: 4.0,
-    imagen: "",
+    imagen: "/imagenes/quesadilla.jpg",
     disponible: true,
   },
   {
@@ -48,7 +48,7 @@ let productos: Producto[] = [
     descripcion: "Burrito con carne, frijoles y arroz.",
     categoria: "Burritos",
     precio: 5.0,
-    imagen: "",
+    imagen: "/imagenes/burrito.jpg",
     disponible: true,
   },
 ];
