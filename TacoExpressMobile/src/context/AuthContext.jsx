@@ -1,0 +1,4 @@
+import React,{createContext,useContext,useEffect,useMemo,useState} from 'react'; import {onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from 'firebase/auth'; import {auth} from '../config/firebase';
+const AuthContext=createContext(null);
+export function AuthProvider({children}){const [user,setUser]=useState(null);const [loading,setLoading]=useState(true);useEffect(()=>onAuthStateChanged(auth,u=>{setUser(u);setLoading(false)}),[]);const value=useMemo(()=>({user,loading,register:(email,password)=>createUserWithEmailAndPassword(auth,email.trim(),password),login:(email,password)=>signInWithEmailAndPassword(auth,email.trim(),password),logout:()=>signOut(auth)}),[user,loading]);return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>}
+export function useAuth(){const ctx=useContext(AuthContext);if(!ctx)throw new Error('useAuth debe utilizarse dentro de AuthProvider');return ctx;}
